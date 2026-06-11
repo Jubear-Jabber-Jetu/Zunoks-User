@@ -1,0 +1,79 @@
+<div class="intro-shell">
+  <section class="intro-hero">
+    <div class="hero-copy">
+      <span class="hero-tag">ZUNOKS · {{ meta.date }}</span>
+      <h1>{{ meta.title }}</h1>
+      <p class="hero-subtitle">{{ meta.subtitle }}</p>
+
+      <div class="meta-row">
+        <div class="meta-item">
+          <span class="meta-label">Client</span>
+          <span class="meta-value">{{ meta.client }}</span>
+        </div>
+        <div class="meta-divider" aria-hidden="true"></div>
+        <div class="meta-item">
+          <span class="meta-label">Conducted by</span>
+          <span class="meta-value">{{ meta.conductedBy }}</span>
+        </div>
+        <div class="meta-divider" aria-hidden="true"></div>
+        <div class="meta-item">
+          <span class="meta-label">Scope</span>
+          <span class="meta-value">{{ moduleCount }} benefit modules</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <svg class="hero-illustration" viewBox="0 0 280 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="40" y="30" width="200" height="160" rx="14" fill="#eef8e8" stroke="#6cbe45" stroke-width="2" stroke-opacity="0.35"/>
+        <rect x="58" y="52" width="80" height="8" rx="4" fill="#6cbe45" fill-opacity="0.5"/>
+        <rect x="58" y="72" width="164" height="6" rx="3" fill="#cdd5c4"/>
+        <rect x="58" y="88" width="140" height="6" rx="3" fill="#cdd5c4"/>
+        <rect x="58" y="104" width="120" height="6" rx="3" fill="#cdd5c4"/>
+        <circle cx="72" cy="138" r="10" stroke="#6cbe45" stroke-width="2"/>
+        <circle cx="72" cy="138" r="5" fill="#6cbe45"/>
+        <rect x="96" y="132" width="100" height="6" rx="3" fill="#cdd5c4"/>
+        <circle cx="72" cy="166" r="10" stroke="#f7941d" stroke-width="2"/>
+        <rect x="96" y="160" width="80" height="6" rx="3" fill="#cdd5c4"/>
+        <path class="hero-swoosh" d="M200 18 Q240 50 260 90" stroke="#f7941d" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="230" cy="175" r="28" fill="#fff5eb" stroke="#f7941d" stroke-width="2" stroke-opacity="0.4"/>
+        <path d="M220 175 L228 183 L242 167" stroke="#f7941d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <p class="confidential">
+    <svg class="confidential-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+    </svg>
+    {{ meta.confidentiality }}
+  </p>
+
+  <section class="instructions-panel">
+    <div class="panel-head">
+      <h2>Before you begin</h2>
+      <span class="panel-count">{{ instructions.length }} guidelines</span>
+    </div>
+    <ol class="instruction-list">
+      @for (item of instructions; track item; let i = $index) {
+        <li class="instruction-item" [style.--step-delay]="i * 0.05 + 's'">
+          <span class="step-num">{{ i + 1 }}</span>
+          <span class="step-text">{{ item }}</span>
+        </li>
+      }
+    </ol>
+  </section>
+
+  <footer class="intro-footer">
+    <label class="ack-box">
+      <input type="checkbox" [(ngModel)]="acknowledged" />
+      <span>I confirm I am authorized to complete this questionnaire on behalf of my organization.</span>
+    </label>
+    <a class="btn btn-primary" [class.disabled]="!acknowledged" routerLink="/organization">
+      Continue
+      <svg class="btn-arrow" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/>
+      </svg>
+    </a>
+  </footer>
+</div>

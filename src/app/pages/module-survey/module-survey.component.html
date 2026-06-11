@@ -1,0 +1,86 @@
+<div class="page-card survey-page">
+  @let _answers = state.responses();
+  @if (isNumberedModule) {
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span>Module {{ displayModuleNumber }} of {{ totalNumberedModules }}</span>
+        <span>{{ progressPercent }}% complete</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progressPercent"></div>
+      </div>
+    </div>
+  }
+
+  <div class="module-header">
+    @if (isNumberedModule) {
+      <span class="step">Module {{ displayModuleNumber }} of {{ totalNumberedModules }}</span>
+    } @else {
+      <span class="step step-profile">Organizational Profile</span>
+    }
+    <h1>{{ currentModule.name }}</h1>
+    <p class="desc">{{ moduleDescription }}</p>
+  </div>
+
+  @for (q of currentModule.questions; track q.id) {
+    @if (q.id === 'OP_3') {
+      <app-form-field-group
+        sectionId="OP_3"
+        title="Name and designation of person completing this questionnaire"
+        [fields]="op3Fields"
+        [values]="getOp3Values()"
+        (fieldChange)="onGroupFieldChange($event)"
+      />
+    } @else if (!skipQuestion(q.id) && isQuestionVisible(q.id)) {
+      @let tableCfg = getTableConfigFor(q.id);
+      @let fieldCfg = getConditionalFieldsFor(q.id);
+      <app-question-field
+        [moduleName]="currentModule.name"
+        [question]="q"
+        [sectionHeader]="getTableSectionHeader(q)"
+        [conditionalTable]="tableCfg?.table"
+        [showTableWhen]="tableCfg?.showWhen ?? ''"
+        [tableCaption]="tableCfg?.caption ?? ''"
+        [tableValue]="tableCfg ? state.getAnswer(currentModule.name, tableCfg.table.id) : ''"
+        [conditionalFields]="fieldCfg"
+        [conditionalFieldValues]="fieldCfg.length ? getConditionalFieldValues(q.id) : {}"
+        [value]="state.getAnswer(currentModule.name, q.id)"
+        (valueChange)="onAnswer(q.id, q.label, $event)"
+        (tableValueChange)="tableCfg && onAnswer(tableCfg.table.id, tableCfg.table.label, $event)"
+        (conditionalFieldChange)="onConditionalFieldChange($event)"
+      />
+    }
+  }
+
+  @if (isModuleSkipped && moduleSkipGate) {
+    <div class="skip-notice">
+      <p>{{ moduleSkipGate.message }}</p>
+      <p class="skip-hint">Continue to the previous or next section using the buttons below.</p>
+    </div>
+  }
+
+  @if (error) {
+    <p class="error-banner">{{ error }}</p>
+  }
+
+  <div class="actions" [class.actions-skipped]="isModuleSkipped">
+    <button class="btn btn-secondary" (click)="prev()">
+      @if (moduleIndex === 0) {
+        Back to Organization
+      } @else if (moduleIndex === 1) {
+        Previous
+      } @else {
+        Previous Module
+      }
+    </button>
+    @if (moduleIndex < modules.length - 1) {
+      <button class="btn btn-primary" (click)="next()">
+        {{ moduleIndex === 0 ? 'Continue' : 'Next Module' }}
+      </button>
+    } @else {
+      <button class="btn btn-primary" [disabled]="submitting" (click)="submit()">
+        {{ submitting ? 'Submitting...' : 'Submit Survey' }}
+      </button>
+    }
+  </div>
+</div>

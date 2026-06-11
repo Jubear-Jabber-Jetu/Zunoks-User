@@ -1,0 +1,349 @@
+@if (question.id === 'OP_1') {
+  <div class="question-group inline-group">
+    <label class="question-label inline-label">
+      <span class="question-id">{{ displayQuestionId(question.id) }}</span>
+      {{ question.label }}
+    </label>
+    <input type="text" class="text-input inline-input" [ngModel]="value"
+      (ngModelChange)="valueChange.emit($event)" placeholder="Enter organization name" />
+  </div>
+} @else if (question.id === 'OP_2') {
+  <div class="question-group inline-group">
+    <label class="question-label inline-label">
+      <span class="question-id">{{ displayQuestionId(question.id) }}</span>
+      {{ question.label }}
+    </label>
+    <input type="text" class="text-input inline-input short" [ngModel]="value"
+      (ngModelChange)="valueChange.emit($event)" placeholder="Headcount" />
+  </div>
+} @else if (question.id === 'PF_1_3') {
+  <div class="question-group">
+    <label class="question-label">
+      <span class="question-id">{{ displayQuestionId(question.id) }}</span>
+      {{ question.label }}
+    </label>
+    <div class="conditional-field rate-field">
+      <label for="PF_1_3_rate">Rate</label>
+      <div class="rate-input-wrap">
+        <input
+          id="PF_1_3_rate"
+          type="text"
+          inputmode="decimal"
+          class="text-input"
+          placeholder="0.00"
+          [ngModel]="value"
+          (ngModelChange)="valueChange.emit($event)"
+        />
+        <span class="rate-suffix">%</span>
+      </div>
+    </div>
+  </div>
+} @else if (question.id === 'PF_1_9_sub_times') {
+  <div class="question-group sub-question">
+    <label class="question-label">{{ question.label }}</label>
+    <div class="conditional-field rate-field">
+      <div class="rate-input-wrap">
+        <input
+          id="PF_1_9_sub_times"
+          type="text"
+          inputmode="numeric"
+          class="text-input"
+          placeholder="0"
+          [ngModel]="value"
+          (ngModelChange)="valueChange.emit($event)"
+        />
+        <span class="rate-suffix">Times</span>
+      </div>
+    </div>
+  </div>
+} @else if (question.id === 'PF_1_11') {
+  <div class="question-group">
+    <label class="question-label">
+      <span class="question-id">{{ displayQuestionId(question.id) }}</span>
+      {{ question.label }}
+    </label>
+    <div class="conditional-field rate-field">
+      <label for="PF_1_11_rate">Rate</label>
+      <div class="rate-input-wrap">
+        <input
+          id="PF_1_11_rate"
+          type="text"
+          inputmode="decimal"
+          class="text-input"
+          placeholder="0.00"
+          [ngModel]="value"
+          (ngModelChange)="valueChange.emit($event)"
+        />
+        <span class="rate-suffix">%</span>
+      </div>
+    </div>
+  </div>
+} @else if (question.id === 'PF_1_13') {
+  <div class="question-group">
+    <label class="question-label">
+      <span class="question-id">{{ displayQuestionId(question.id) }}</span>
+      {{ question.label }}
+    </label>
+    <div class="conditional-field rate-field">
+      <label for="PF_1_13_years">Years</label>
+      <div class="rate-input-wrap">
+        <input
+          id="PF_1_13_years"
+          type="text"
+          inputmode="numeric"
+          class="text-input"
+          placeholder="0"
+          [ngModel]="value"
+          (ngModelChange)="valueChange.emit($event)"
+        />
+      </div>
+    </div>
+  </div>
+} @else if (question.id === 'PF_1_7') {
+  <div class="question-group">
+    <label class="question-label">
+      <span class="question-id">{{ displayQuestionId(question.id) }}</span>
+      {{ question.label }}
+    </label>
+    <div class="conditional-field rate-field">
+      <label for="PF_1_7_days">Days</label>
+      <div class="rate-input-wrap">
+        <input
+          id="PF_1_7_days"
+          type="text"
+          inputmode="numeric"
+          class="text-input"
+          placeholder="0"
+          [ngModel]="value"
+          (ngModelChange)="valueChange.emit($event)"
+        />
+      </div>
+    </div>
+  </div>
+} @else if (question.id === 'MP_6_3') {
+  <div class="question-group">
+    <label class="question-label">
+      <span class="question-id">{{ displayQuestionId(question.id) }}</span>
+      {{ question.label }}
+    </label>
+    <div class="conditional-field rate-field">
+      <label for="MP_6_3_months">Months</label>
+      <div class="rate-input-wrap">
+        <input
+          id="MP_6_3_months"
+          type="text"
+          inputmode="numeric"
+          class="text-input"
+          placeholder="0"
+          [ngModel]="value"
+          (ngModelChange)="valueChange.emit($event)"
+        />
+      </div>
+    </div>
+  </div>
+} @else if (question.type === 'table' && sectionHeader) {
+  <div class="question-group unified-section">
+    <label class="question-label">
+      @if (showQuestionNumber(sectionHeader.id)) {
+        <span class="question-id">{{ displayQuestionId(sectionHeader.id) }}</span>
+      }
+      {{ sectionHeader.label }}
+    </label>
+    @if (question.label) {
+      <p class="table-subtitle">{{ question.label }}</p>
+    }
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>{{ rowHeaderLabel }}</th>
+          @for (col of question.columns; track col) {
+            <th>{{ col }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of question.rows; track row) {
+          <tr>
+            <td>{{ row }}</td>
+            @for (col of question.columns; track col) {
+              <td>
+                <input type="text" [value]="getTableCell(row, col)"
+                  (input)="onTableInput(row, col, $any($event.target).value)" />
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+} @else {
+  <div class="question-group" [class.sub-question]="!showQuestionNumber(question.id)">
+    <label class="question-label">
+      @if (showQuestionNumber(question.id)) {
+        <span class="question-id">{{ displayQuestionId(question.id) }}</span>
+      }
+      {{ question.label }}
+    </label>
+
+    @if (question.type === 'radio') {
+      <div class="option-group">
+        @for (opt of question.options; track opt) {
+          <div class="option-row">
+            <label class="option-label">
+              <input type="radio" [name]="moduleName + '_' + question.id" [value]="opt"
+                [checked]="value === opt || (useGenericOtherInput(opt) && isOtherSelected())"
+                (change)="onRadioChange(opt)" />
+              <span class="option-text">{{ opt }}</span>
+            </label>
+            @if (showGenericOtherInput(opt)) {
+              <input type="text" class="other-input" [(ngModel)]="otherText" (ngModelChange)="onOtherInput()"
+                placeholder="Please specify" />
+            }
+            @for (field of getFieldsForOption(opt); track field.fieldId) {
+              @if (value === opt) {
+                <div class="conditional-field" [class.rate-field]="field.inputVariant === 'rate'">
+                  @if (field.hint) {
+                    <p class="field-hint">{{ field.hint }}</p>
+                  }
+                  <label [for]="field.fieldId">{{ field.label }}</label>
+                  @if (field.inputVariant === 'rate') {
+                    <div class="rate-input-wrap">
+                      <input
+                        [id]="field.fieldId"
+                        type="text"
+                        inputmode="decimal"
+                        class="text-input"
+                        [placeholder]="field.placeholder || '0.00'"
+                        [ngModel]="getConditionalFieldValue(field.fieldId)"
+                        (ngModelChange)="onConditionalFieldInput(field, $event)"
+                      />
+                      <span class="rate-suffix">%</span>
+                    </div>
+                  } @else {
+                    <input
+                      [id]="field.fieldId"
+                      type="text"
+                      class="text-input"
+                      [placeholder]="field.placeholder || ''"
+                      [ngModel]="getConditionalFieldValue(field.fieldId)"
+                      (ngModelChange)="onConditionalFieldInput(field, $event)"
+                    />
+                  }
+                </div>
+              }
+            }
+          </div>
+        }
+      </div>
+
+      @if (showConditionalTable() && conditionalTable) {
+        <p class="table-subtitle">{{ tableCaption || 'If yes, please complete the table below:' }}</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>{{ rowHeaderLabel }}</th>
+              @for (col of conditionalTable.columns; track col) {
+                <th>{{ col }}</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of conditionalTable.rows; track row) {
+              <tr>
+                <td>{{ row }}</td>
+                @for (col of conditionalTable.columns; track col) {
+                  <td>
+                    <input type="text" [value]="getTableCell(row, col)"
+                      (input)="onTableInput(row, col, $any($event.target).value)" />
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    }
+
+    @if (question.type === 'checkbox') {
+      <p class="checkbox-hint">Select all that apply.</p>
+      <div class="option-group">
+        @for (opt of question.options; track opt) {
+          <div class="option-row">
+            <label class="option-label">
+              <input type="checkbox" [checked]="checkboxValues.includes(opt)"
+                (change)="toggleCheckbox(opt, $any($event.target).checked)" />
+              <span class="option-text">{{ opt }}</span>
+            </label>
+            @for (field of getFieldsForOption(opt); track field.fieldId) {
+              @if (checkboxValues.includes(opt)) {
+                <div class="conditional-field" [class.rate-field]="field.inputVariant === 'rate'">
+                  @if (field.hint) {
+                    <p class="field-hint">{{ field.hint }}</p>
+                  }
+                  <label [for]="field.fieldId">{{ field.label }}</label>
+                  @if (field.inputVariant === 'rate') {
+                    <div class="rate-input-wrap">
+                      <input
+                        [id]="field.fieldId"
+                        type="text"
+                        inputmode="decimal"
+                        class="text-input"
+                        [placeholder]="field.placeholder || '0.00'"
+                        [ngModel]="getConditionalFieldValue(field.fieldId)"
+                        (ngModelChange)="onConditionalFieldInput(field, $event)"
+                      />
+                      <span class="rate-suffix">%</span>
+                    </div>
+                  } @else {
+                    <input
+                      [id]="field.fieldId"
+                      type="text"
+                      class="text-input"
+                      [placeholder]="field.placeholder || ''"
+                      [ngModel]="getConditionalFieldValue(field.fieldId)"
+                      (ngModelChange)="onConditionalFieldInput(field, $event)"
+                    />
+                  }
+                </div>
+              }
+            }
+          </div>
+        }
+      </div>
+    }
+
+    @if (question.type === 'table') {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>{{ rowHeaderLabel }}</th>
+            @for (col of question.columns; track col) {
+              <th>{{ col }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of question.rows; track row) {
+            <tr>
+              <td>{{ row }}</td>
+              @for (col of question.columns; track col) {
+                <td>
+                  <input type="text" [value]="getTableCell(row, col)"
+                    (input)="onTableInput(row, col, $any($event.target).value)" />
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+
+    @if (question.type === 'textarea') {
+      <textarea class="textarea-input" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" rows="4"></textarea>
+    }
+
+    @if (question.type === 'text') {
+      <input type="text" class="text-input" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
+    }
+  </div>
+}

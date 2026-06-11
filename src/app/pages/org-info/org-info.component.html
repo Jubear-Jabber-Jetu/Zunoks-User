@@ -1,0 +1,22 @@
+<div class="page-card org-page">
+  <div class="page-icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="14" width="36" height="28" rx="4" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M16 14V10a8 8 0 0116 0v4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="24" cy="28" r="4" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <h1>Organization Information</h1>
+  <p class="subtitle">Enter your organization name to begin the survey</p>
+
+  <div class="form-group">
+    <label for="companyName">Organization Name (Full legal name)</label>
+    <input id="companyName" type="text" [(ngModel)]="companyName" placeholder="Enter organization name" />
+  </div>
+
+  <div class="actions">
+    <a routerLink="/" class="btn btn-secondary">Back</a>
+    <button class="btn btn-primary" [disabled]="!companyName.trim()" (click)="startSurvey()">Start Survey</button>
+  </div>
+</div>

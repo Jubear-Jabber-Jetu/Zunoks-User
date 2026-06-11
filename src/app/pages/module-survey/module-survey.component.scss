@@ -1,0 +1,98 @@
+.survey-page {
+  max-width: 920px;
+}
+
+.module-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  animation: fadeSlideUp 0.45s var(--ease-out) both;
+}
+
+.step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-green-deep);
+  background: var(--brand-green-soft);
+  padding: 0.38rem 0.85rem;
+  border-radius: 999px;
+  margin-bottom: 0.85rem;
+  border: 1px solid rgba(var(--brand-green-rgb), 0.2);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand-orange);
+    flex-shrink: 0;
+  }
+}
+
+.step-profile {
+  color: var(--brand-orange);
+  background: var(--brand-orange-soft);
+  border-color: rgba(var(--brand-orange-rgb), 0.25);
+
+  &::before {
+    background: var(--brand-green);
+  }
+}
+
+.desc {
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.error {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid #fecaca;
+}
+
+.skip-notice {
+  margin: 1.25rem 0 0;
+  padding: 1.05rem 1.2rem;
+  border-radius: var(--radius-lg);
+  background: var(--brand-green-soft);
+  border: 1px solid rgba(var(--brand-green-rgb), 0.2);
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  animation: fadeIn 0.35s ease both;
+
+  p {
+    margin: 0;
+  }
+}
+
+.skip-hint {
+  margin-top: 0.5rem !important;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.actions-skipped {
+  margin-top: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .module-header {
+    animation: none;
+  }
+}

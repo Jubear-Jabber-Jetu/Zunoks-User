@@ -1,0 +1,30 @@
+<div class="question-group form-section">
+  <label class="question-label section-title">
+    <span class="question-id">{{ displayId() }}</span>
+    {{ title }}
+  </label>
+
+  @if (note) {
+    <p class="section-note">{{ note }}</p>
+  }
+
+  <div class="field-grid">
+    @for (row of fields; track $index) {
+      <div class="field-row">
+        @for (field of row; track field.id) {
+          <div class="field-cell">
+            <label [for]="field.id">{{ field.label }}</label>
+            <input
+              [id]="field.id"
+              [type]="field.type || 'text'"
+              class="text-input"
+              [placeholder]="field.placeholder || ''"
+              [ngModel]="getValue(field.id)"
+              (ngModelChange)="onInput(field, $event)"
+            />
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
