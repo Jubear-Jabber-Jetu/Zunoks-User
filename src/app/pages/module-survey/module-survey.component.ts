@@ -206,9 +206,18 @@ export class ModuleSurveyComponent implements OnInit {
     ],
     LE_3_7: [
       {
-        fieldId: 'LE_3_7_custom',
-        label: 'Please provide',
-        showWhen: 'Please provide',
+        fieldId: 'LE_3_7_basic_working_days',
+        label: 'How many days do you count as working days?',
+        hint: 'Formula: Basic salary ÷ (working days) × encashable days',
+        showWhen: 'Basic Based',
+        inputVariant: 'integer',
+      },
+      {
+        fieldId: 'LE_3_7_gross_working_days',
+        label: 'How many days do you count as working days?',
+        hint: 'Formula: Gross salary ÷ (working days) × encashable days',
+        showWhen: 'Gross Based',
+        inputVariant: 'integer',
       },
     ],
     LE_3_8: [

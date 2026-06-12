@@ -441,8 +441,13 @@ export const SURVEY_MODULES: SurveyModule[] = [
         ]
       },
       {
-        "id": "LE_3_7_custom",
-        "label": "Please provide",
+        "id": "LE_3_7_basic_working_days",
+        "label": "Working days (Basic Based)",
+        "type": "text"
+      },
+      {
+        "id": "LE_3_7_gross_working_days",
+        "label": "Working days (Gross Based)",
         "type": "text"
       },
       {
@@ -450,13 +455,10 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "label": "Encashment calculation basis — what rate is used?",
         "type": "radio",
         "options": [
-          "Please provide",
-          "Gross salary ÷ 30 × encashable days",
-          "Basic salary ÷ 26 (working days) × encashable days",
-          "CTC-based formula",
-          "Other — please specify"
-        ],
-        "hasInput": true
+          "CTC Based",
+          "Basic Based",
+          "Gross Based"
+        ]
       },
       {
         "id": "LE_3_8_maximum_carry_forward_days",
