@@ -12,7 +12,37 @@
 
   <div class="form-group">
     <label for="companyName">Organization Name (Full legal name)</label>
-    <input id="companyName" type="text" [(ngModel)]="companyName" />
+    <input id="companyName" type="text" [(ngModel)]="companyName" (ngModelChange)="onCompanyNameChange($event)" />
+  </div>
+
+  <div class="progress-save-card" [class.is-active]="state.saveProgressEnabled()">
+    <div class="progress-save-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+        <path d="M17 21v-7H7v7M7 3v5h8" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="progress-save-copy">
+      <span class="progress-save-title">Save progress on this device</span>
+      <p class="progress-save-desc">
+        @if (state.saveProgressEnabled()) {
+          Your answers are saved locally until you submit. You can return and continue where you left off.
+        } @else {
+          Progress will not be saved. If you leave, you will need to start again.
+        }
+      </p>
+    </div>
+    <label class="save-toggle" [attr.aria-label]="state.saveProgressEnabled() ? 'Disable progress saving' : 'Enable progress saving'">
+      <input
+        type="checkbox"
+        [checked]="state.saveProgressEnabled()"
+        (change)="onSaveProgressChange($any($event.target).checked)"
+      />
+      <span class="save-toggle-track">
+        <span class="save-toggle-thumb"></span>
+      </span>
+      <span class="save-toggle-label">{{ state.saveProgressEnabled() ? 'On' : 'Off' }}</span>
+    </label>
   </div>
 
   <div class="actions">

@@ -40,6 +40,7 @@ export class ModuleSurveyComponent implements OnInit {
         this.router.navigate(['/organization']);
         return;
       }
+      this.state.setLastRoute(`/survey/${this.moduleIndex}`);
       if (this.moduleIndex === 0) {
         this.state.syncOrganizationNameToProfile();
       }
@@ -375,7 +376,7 @@ export class ModuleSurveyComponent implements OnInit {
     this.error = '';
     this.api.submit(this.state.buildPayload()).subscribe({
       next: res => {
-        this.state.submissionId.set(res.submissionId);
+        this.state.completeSubmission(res.submissionId);
         this.router.navigate(['/success']);
       },
       error: err => {
