@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { getSurveyPlaceholder } from '../../utils/survey-placeholders';
 
 export interface FormFieldSpec {
   id: string;
@@ -22,6 +23,7 @@ export class FormFieldGroupComponent {
   @Input() note = '';
   @Input({ required: true }) fields!: FormFieldSpec[][];
   @Input({ required: true }) values!: Record<string, string>;
+  @Input() showPlaceholders = false;
   @Output() fieldChange = new EventEmitter<{ id: string; label: string; value: string }>();
 
   displayId(): string {
@@ -34,5 +36,9 @@ export class FormFieldGroupComponent {
 
   getValue(fieldId: string): string {
     return this.values[fieldId] ?? '';
+  }
+
+  placeholderFor(field: FormFieldSpec): string {
+    return getSurveyPlaceholder(field.id, undefined, field.placeholder, this.showPlaceholders);
   }
 }

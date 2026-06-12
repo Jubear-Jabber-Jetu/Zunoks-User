@@ -18,7 +18,7 @@
               [id]="field.id"
               [type]="field.type || 'text'"
               class="text-input"
-              [placeholder]="field.placeholder || ''"
+              [placeholder]="placeholderFor(field)"
               [ngModel]="getValue(field.id)"
               (ngModelChange)="onInput(field, $event)"
             />

@@ -23,12 +23,13 @@
   </div>
 
   @for (q of currentModule.questions; track q.id) {
-    @if (q.id === 'OP_3') {
+    @if (q.id === 'OP_4') {
       <app-form-field-group
-        sectionId="OP_3"
+        sectionId="OP_4"
         title="Name and designation of person completing this questionnaire"
-        [fields]="op3Fields"
-        [values]="getOp3Values()"
+        [fields]="op4Fields"
+        [values]="getOp4Values()"
+        [showPlaceholders]="isNumberedModule"
         (fieldChange)="onGroupFieldChange($event)"
       />
     } @else if (!skipQuestion(q.id) && isQuestionVisible(q.id)) {
@@ -36,6 +37,7 @@
       @let fieldCfg = getConditionalFieldsFor(q.id);
       <app-question-field
         [moduleName]="currentModule.name"
+        [showPlaceholders]="isNumberedModule"
         [question]="q"
         [sectionHeader]="getTableSectionHeader(q)"
         [conditionalTable]="tableCfg?.table"
@@ -44,8 +46,10 @@
         [tableValue]="tableCfg ? state.getAnswer(currentModule.name, tableCfg.table.id) : ''"
         [conditionalFields]="fieldCfg"
         [conditionalFieldValues]="fieldCfg.length ? getConditionalFieldValues(q.id) : {}"
+        [entitlementTableValue]="q.id === 'GF_2_6_eligibility_start' ? state.getAnswer(currentModule.name, 'GF_table_2_6') : ''"
         [value]="state.getAnswer(currentModule.name, q.id)"
         (valueChange)="onAnswer(q.id, q.label, $event)"
+        (entitlementTableValueChange)="q.id === 'GF_2_6_eligibility_start' && onAnswer('GF_table_2_6', 'SL', $event)"
         (tableValueChange)="tableCfg && onAnswer(tableCfg.table.id, tableCfg.table.label, $event)"
         (conditionalFieldChange)="onConditionalFieldChange($event)"
       />

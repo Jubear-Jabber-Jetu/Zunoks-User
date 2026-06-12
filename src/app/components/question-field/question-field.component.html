@@ -5,7 +5,7 @@
       {{ question.label }}
     </label>
     <input type="text" class="text-input inline-input" [ngModel]="value"
-      (ngModelChange)="valueChange.emit($event)" placeholder="Enter organization name" />
+      (ngModelChange)="valueChange.emit($event)" [placeholder]="placeholderFor('OP_1')" />
   </div>
 } @else if (question.id === 'OP_2') {
   <div class="question-group inline-group">
@@ -14,7 +14,7 @@
       {{ question.label }}
     </label>
     <input type="text" class="text-input inline-input short" [ngModel]="value"
-      (ngModelChange)="valueChange.emit($event)" placeholder="Headcount" />
+      (ngModelChange)="valueChange.emit($event)" [placeholder]="placeholderFor('OP_2')" />
   </div>
 } @else if (question.id === 'PF_1_3') {
   <div class="question-group">
@@ -22,6 +22,7 @@
       <span class="question-id">{{ displayQuestionId(question.id) }}</span>
       {{ question.label }}
     </label>
+    <p class="field-hint standalone-hint">{{ inputHint('PF_1_3') }}</p>
     <div class="conditional-field rate-field">
       <label for="PF_1_3_rate">Rate</label>
       <div class="rate-input-wrap">
@@ -30,9 +31,11 @@
           type="text"
           inputmode="decimal"
           class="text-input"
-          placeholder="0.00"
-          [ngModel]="value"
-          (ngModelChange)="valueChange.emit($event)"
+          [placeholder]="placeholderFor('PF_1_3')"
+          [value]="value"
+          (input)="handleValidatedInput($event, 'PF_1_3')"
+          (paste)="handleValidatedPaste($event, 'PF_1_3')"
+          (keydown)="blockInvalidSurveyKey($event, 'PF_1_3')"
         />
         <span class="rate-suffix">%</span>
       </div>
@@ -41,6 +44,7 @@
 } @else if (question.id === 'PF_1_9_sub_times') {
   <div class="question-group sub-question">
     <label class="question-label">{{ question.label }}</label>
+    <p class="field-hint standalone-hint">{{ inputHint('PF_1_9_sub_times') }}</p>
     <div class="conditional-field rate-field">
       <div class="rate-input-wrap">
         <input
@@ -48,11 +52,38 @@
           type="text"
           inputmode="numeric"
           class="text-input"
-          placeholder="0"
-          [ngModel]="value"
-          (ngModelChange)="valueChange.emit($event)"
+          [placeholder]="placeholderFor('PF_1_9_sub_times')"
+          [value]="value"
+          (input)="handleValidatedInput($event, 'PF_1_9_sub_times')"
+          (paste)="handleValidatedPaste($event, 'PF_1_9_sub_times')"
+          (keydown)="blockInvalidSurveyKey($event, 'PF_1_9_sub_times')"
         />
         <span class="rate-suffix">Times</span>
+      </div>
+    </div>
+  </div>
+} @else if (question.id === 'PF_1_12') {
+  <div class="question-group">
+    <label class="question-label">
+      <span class="question-id">{{ displayQuestionId(question.id) }}</span>
+      {{ question.label }}
+    </label>
+    <p class="field-hint standalone-hint">{{ inputHint('PF_1_12') }}</p>
+    <div class="conditional-field rate-field">
+      <label for="PF_1_12_limit">Limit</label>
+      <div class="rate-input-wrap">
+        <input
+          id="PF_1_12_limit"
+          type="text"
+          inputmode="decimal"
+          class="text-input"
+          [placeholder]="placeholderFor('PF_1_12')"
+          [value]="value"
+          (input)="handleValidatedInput($event, 'PF_1_12')"
+          (paste)="handleValidatedPaste($event, 'PF_1_12')"
+          (keydown)="blockInvalidSurveyKey($event, 'PF_1_12')"
+        />
+        <span class="rate-suffix">%</span>
       </div>
     </div>
   </div>
@@ -62,6 +93,7 @@
       <span class="question-id">{{ displayQuestionId(question.id) }}</span>
       {{ question.label }}
     </label>
+    <p class="field-hint standalone-hint">{{ inputHint('PF_1_11') }}</p>
     <div class="conditional-field rate-field">
       <label for="PF_1_11_rate">Rate</label>
       <div class="rate-input-wrap">
@@ -70,9 +102,11 @@
           type="text"
           inputmode="decimal"
           class="text-input"
-          placeholder="0.00"
-          [ngModel]="value"
-          (ngModelChange)="valueChange.emit($event)"
+          [placeholder]="placeholderFor('PF_1_11')"
+          [value]="value"
+          (input)="handleValidatedInput($event, 'PF_1_11')"
+          (paste)="handleValidatedPaste($event, 'PF_1_11')"
+          (keydown)="blockInvalidSurveyKey($event, 'PF_1_11')"
         />
         <span class="rate-suffix">%</span>
       </div>
@@ -84,17 +118,20 @@
       <span class="question-id">{{ displayQuestionId(question.id) }}</span>
       {{ question.label }}
     </label>
+    <p class="field-hint standalone-hint">{{ inputHint('PF_1_13') }}</p>
     <div class="conditional-field rate-field">
       <label for="PF_1_13_years">Years</label>
       <div class="rate-input-wrap">
         <input
           id="PF_1_13_years"
           type="text"
-          inputmode="numeric"
+          inputmode="decimal"
           class="text-input"
-          placeholder="0"
-          [ngModel]="value"
-          (ngModelChange)="valueChange.emit($event)"
+          [placeholder]="placeholderFor('PF_1_13')"
+          [value]="value"
+          (input)="handleValidatedInput($event, 'PF_1_13')"
+          (paste)="handleValidatedPaste($event, 'PF_1_13')"
+          (keydown)="blockInvalidSurveyKey($event, 'PF_1_13')"
         />
       </div>
     </div>
@@ -105,6 +142,7 @@
       <span class="question-id">{{ displayQuestionId(question.id) }}</span>
       {{ question.label }}
     </label>
+    <p class="field-hint standalone-hint">{{ inputHint('PF_1_7') }}</p>
     <div class="conditional-field rate-field">
       <label for="PF_1_7_days">Days</label>
       <div class="rate-input-wrap">
@@ -113,9 +151,11 @@
           type="text"
           inputmode="numeric"
           class="text-input"
-          placeholder="0"
-          [ngModel]="value"
-          (ngModelChange)="valueChange.emit($event)"
+          [placeholder]="placeholderFor('PF_1_7')"
+          [value]="value"
+          (input)="handleValidatedInput($event, 'PF_1_7')"
+          (paste)="handleValidatedPaste($event, 'PF_1_7')"
+          (keydown)="blockInvalidSurveyKey($event, 'PF_1_7')"
         />
       </div>
     </div>
@@ -126,6 +166,7 @@
       <span class="question-id">{{ displayQuestionId(question.id) }}</span>
       {{ question.label }}
     </label>
+    <p class="field-hint standalone-hint">{{ inputHint('MP_6_3') }}</p>
     <div class="conditional-field rate-field">
       <label for="MP_6_3_months">Months</label>
       <div class="rate-input-wrap">
@@ -134,12 +175,74 @@
           type="text"
           inputmode="numeric"
           class="text-input"
-          placeholder="0"
-          [ngModel]="value"
-          (ngModelChange)="valueChange.emit($event)"
+          [placeholder]="placeholderFor('MP_6_3')"
+          [value]="value"
+          (input)="handleValidatedInput($event, 'MP_6_3')"
+          (paste)="handleValidatedPaste($event, 'MP_6_3')"
+          (keydown)="blockInvalidSurveyKey($event, 'MP_6_3')"
         />
       </div>
     </div>
+  </div>
+} @else if (question.id === 'GF_2_6_eligibility_start') {
+  <div class="question-group unified-section">
+    <label class="question-label">
+      <span class="question-id">{{ displayQuestionId('GF_2_6') }}</span>
+      Entitlement
+    </label>
+
+    <p class="table-subtitle">{{ question.label }}</p>
+    <div class="option-group">
+      @for (opt of question.options; track opt) {
+        <button
+          type="button"
+          class="option-label"
+          [class.selected]="isOptionSelected(opt)"
+          [attr.aria-pressed]="isOptionSelected(opt)"
+          (click)="onOptionClick(opt)"
+        >
+          <span class="option-circle" [class.selected]="isOptionSelected(opt)" aria-hidden="true"></span>
+          <span class="option-text">{{ opt }}</span>
+        </button>
+      }
+    </div>
+
+    <table class="data-table entitlement-table">
+      <thead>
+        <tr>
+          <th>SL</th>
+          <th>Number of basic</th>
+          <th>From (Years)</th>
+          <th>To (Years)</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of gratuityEntitlementRows; track row.sl) {
+          <tr>
+            <td>{{ row.sl }}</td>
+            <td>{{ row.basic }}</td>
+            <td>
+              <input
+                type="text"
+                inputmode="numeric"
+                [placeholder]="tableInputPlaceholder()"
+                [value]="getEntitlementTableCell(row.sl, 'From (Years)')"
+                (input)="onEntitlementTableInput(row.sl, 'From (Years)', $any($event.target).value)"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                inputmode="numeric"
+                [placeholder]="tableInputPlaceholder()"
+                [value]="getEntitlementTableCell(row.sl, 'To (Years)')"
+                (input)="onEntitlementTableInput(row.sl, 'To (Years)', $any($event.target).value)"
+              />
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
   </div>
 } @else if (question.type === 'table' && sectionHeader) {
   <div class="question-group unified-section">
@@ -167,7 +270,7 @@
             <td>{{ row }}</td>
             @for (col of question.columns; track col) {
               <td>
-                <input type="text" [value]="getTableCell(row, col)"
+                <input type="text" [placeholder]="tableInputPlaceholder()" [value]="getTableCell(row, col)"
                   (input)="onTableInput(row, col, $any($event.target).value)" />
               </td>
             }
@@ -189,21 +292,25 @@
       <div class="option-group">
         @for (opt of question.options; track opt) {
           <div class="option-row">
-            <label class="option-label">
-              <input type="radio" [name]="moduleName + '_' + question.id" [value]="opt"
-                [checked]="value === opt || (useGenericOtherInput(opt) && isOtherSelected())"
-                (change)="onRadioChange(opt)" />
+            <button
+              type="button"
+              class="option-label"
+              [class.selected]="isOptionSelected(opt)"
+              [attr.aria-pressed]="isOptionSelected(opt)"
+              (click)="onOptionClick(opt)"
+            >
+              <span class="option-circle" [class.selected]="isOptionSelected(opt)" aria-hidden="true"></span>
               <span class="option-text">{{ opt }}</span>
-            </label>
+            </button>
             @if (showGenericOtherInput(opt)) {
               <input type="text" class="other-input" [(ngModel)]="otherText" (ngModelChange)="onOtherInput()"
-                placeholder="Please specify" />
+                [placeholder]="placeholderFor('OTHER_SPECIFY')" />
             }
             @for (field of getFieldsForOption(opt); track field.fieldId) {
               @if (value === opt) {
-                <div class="conditional-field" [class.rate-field]="field.inputVariant === 'rate'">
-                  @if (field.hint) {
-                    <p class="field-hint">{{ field.hint }}</p>
+                <div class="conditional-field" [class.rate-field]="field.inputVariant === 'rate' || field.inputVariant === 'integer'">
+                  @if (field.hint || inputHint(field.fieldId, field.inputVariant)) {
+                    <p class="field-hint">{{ field.hint || inputHint(field.fieldId, field.inputVariant) }}</p>
                   }
                   <label [for]="field.fieldId">{{ field.label }}</label>
                   @if (field.inputVariant === 'rate') {
@@ -213,18 +320,34 @@
                         type="text"
                         inputmode="decimal"
                         class="text-input"
-                        [placeholder]="field.placeholder || '0.00'"
-                        [ngModel]="getConditionalFieldValue(field.fieldId)"
-                        (ngModelChange)="onConditionalFieldInput(field, $event)"
+                        [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
+                        [value]="getConditionalFieldValue(field.fieldId)"
+                        (input)="handleConditionalValidatedInput($event, field)"
+                        (paste)="handleConditionalValidatedPaste($event, field)"
+                        (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
                       />
                       <span class="rate-suffix">%</span>
+                    </div>
+                  } @else if (field.inputVariant === 'integer') {
+                    <div class="rate-input-wrap">
+                      <input
+                        [id]="field.fieldId"
+                        type="text"
+                        inputmode="numeric"
+                        class="text-input"
+                        [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
+                        [value]="getConditionalFieldValue(field.fieldId)"
+                        (input)="handleConditionalValidatedInput($event, field)"
+                        (paste)="handleConditionalValidatedPaste($event, field)"
+                        (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
+                      />
                     </div>
                   } @else {
                     <input
                       [id]="field.fieldId"
                       type="text"
                       class="text-input"
-                      [placeholder]="field.placeholder || ''"
+                      [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
                       [ngModel]="getConditionalFieldValue(field.fieldId)"
                       (ngModelChange)="onConditionalFieldInput(field, $event)"
                     />
@@ -253,7 +376,7 @@
                 <td>{{ row }}</td>
                 @for (col of conditionalTable.columns; track col) {
                   <td>
-                    <input type="text" [value]="getTableCell(row, col)"
+                    <input type="text" [placeholder]="tableInputPlaceholder()" [value]="getTableCell(row, col)"
                       (input)="onTableInput(row, col, $any($event.target).value)" />
                   </td>
                 }
@@ -265,20 +388,27 @@
     }
 
     @if (question.type === 'checkbox') {
-      <p class="checkbox-hint">Select all that apply.</p>
+      @if (question.allowMultiple) {
+        <p class="checkbox-hint">Select all that apply.</p>
+      }
       <div class="option-group">
         @for (opt of question.options; track opt) {
           <div class="option-row">
-            <label class="option-label">
-              <input type="checkbox" [checked]="checkboxValues.includes(opt)"
-                (change)="toggleCheckbox(opt, $any($event.target).checked)" />
+            <button
+              type="button"
+              class="option-label"
+              [class.selected]="isOptionSelected(opt)"
+              [attr.aria-pressed]="isOptionSelected(opt)"
+              (click)="onOptionClick(opt)"
+            >
+              <span class="option-circle" [class.selected]="isOptionSelected(opt)" aria-hidden="true"></span>
               <span class="option-text">{{ opt }}</span>
-            </label>
+            </button>
             @for (field of getFieldsForOption(opt); track field.fieldId) {
               @if (checkboxValues.includes(opt)) {
-                <div class="conditional-field" [class.rate-field]="field.inputVariant === 'rate'">
-                  @if (field.hint) {
-                    <p class="field-hint">{{ field.hint }}</p>
+                <div class="conditional-field" [class.rate-field]="field.inputVariant === 'rate' || field.inputVariant === 'integer'">
+                  @if (field.hint || inputHint(field.fieldId, field.inputVariant)) {
+                    <p class="field-hint">{{ field.hint || inputHint(field.fieldId, field.inputVariant) }}</p>
                   }
                   <label [for]="field.fieldId">{{ field.label }}</label>
                   @if (field.inputVariant === 'rate') {
@@ -288,18 +418,34 @@
                         type="text"
                         inputmode="decimal"
                         class="text-input"
-                        [placeholder]="field.placeholder || '0.00'"
-                        [ngModel]="getConditionalFieldValue(field.fieldId)"
-                        (ngModelChange)="onConditionalFieldInput(field, $event)"
+                        [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
+                        [value]="getConditionalFieldValue(field.fieldId)"
+                        (input)="handleConditionalValidatedInput($event, field)"
+                        (paste)="handleConditionalValidatedPaste($event, field)"
+                        (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
                       />
                       <span class="rate-suffix">%</span>
+                    </div>
+                  } @else if (field.inputVariant === 'integer') {
+                    <div class="rate-input-wrap">
+                      <input
+                        [id]="field.fieldId"
+                        type="text"
+                        inputmode="numeric"
+                        class="text-input"
+                        [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
+                        [value]="getConditionalFieldValue(field.fieldId)"
+                        (input)="handleConditionalValidatedInput($event, field)"
+                        (paste)="handleConditionalValidatedPaste($event, field)"
+                        (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
+                      />
                     </div>
                   } @else {
                     <input
                       [id]="field.fieldId"
                       type="text"
                       class="text-input"
-                      [placeholder]="field.placeholder || ''"
+                      [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
                       [ngModel]="getConditionalFieldValue(field.fieldId)"
                       (ngModelChange)="onConditionalFieldInput(field, $event)"
                     />
@@ -328,7 +474,7 @@
               <td>{{ row }}</td>
               @for (col of question.columns; track col) {
                 <td>
-                  <input type="text" [value]="getTableCell(row, col)"
+                  <input type="text" [placeholder]="tableInputPlaceholder()" [value]="getTableCell(row, col)"
                     (input)="onTableInput(row, col, $any($event.target).value)" />
                 </td>
               }
@@ -339,11 +485,13 @@
     }
 
     @if (question.type === 'textarea') {
-      <textarea class="textarea-input" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" rows="4"></textarea>
+      <textarea class="textarea-input" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" rows="4"
+        [placeholder]="placeholderFor(question.id)"></textarea>
     }
 
     @if (question.type === 'text') {
-      <input type="text" class="text-input" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
+      <input type="text" class="text-input" [ngModel]="value" (ngModelChange)="valueChange.emit($event)"
+        [placeholder]="placeholderFor(question.id)" />
     }
   </div>
 }

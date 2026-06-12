@@ -321,7 +321,10 @@ a.contact-value {
     transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 
     &::placeholder {
-      color: #9aa394;
+      color: var(--text-muted);
+      opacity: 0.7;
+      font-weight: 400;
+      font-style: italic;
     }
 
     &:hover {
@@ -351,7 +354,10 @@ textarea.field-input {
   transition: border-color 0.2s, box-shadow 0.2s;
 
   &::placeholder {
-    color: #9aa394;
+    color: var(--text-muted);
+    opacity: 0.7;
+    font-weight: 400;
+    font-style: italic;
   }
 
   &:hover {

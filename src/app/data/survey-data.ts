@@ -5,6 +5,7 @@ export interface SurveyQuestion {
   type: string;
   options?: string[];
   hasInput?: boolean;
+  allowMultiple?: boolean;
   columns?: string[];
   rows?: string[];
 }
@@ -62,27 +63,41 @@ export const SURVEY_MODULES: SurveyModule[] = [
       },
       {
         "id": "OP_3",
+        "label": "Industry / Sector — select the primary sector that best describes your organization",
+        "type": "radio",
+        "options": [
+          "Telecom",
+          "FMCG / Consumer Goods",
+          "Tobacco",
+          "Energy / Oil & Gas",
+          "Manufacturing / Coatings",
+          "Other — please specify"
+        ],
+        "hasInput": true
+      },
+      {
+        "id": "OP_4",
         "label": "Name and designation of person completing this questionnaire",
         "type": "textarea",
         "options": []
       },
       {
-        "id": "OP_3_name",
+        "id": "OP_4_name",
         "label": "Name of person completing questionnaire",
         "type": "text"
       },
       {
-        "id": "OP_3_designation",
+        "id": "OP_4_designation",
         "label": "Designation",
         "type": "text"
       },
       {
-        "id": "OP_3_email",
+        "id": "OP_4_email",
         "label": "Email address",
         "type": "text"
       },
       {
-        "id": "OP_3_date",
+        "id": "OP_4_date",
         "label": "Date of completion",
         "type": "text"
       }
@@ -106,7 +121,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
       {
         "id": "PF_1_2",
         "label": "PF eligibility — which employees are covered?",
-        "type": "checkbox",
+        "type": "radio",
         "options": [
           "All permanent employees (upon confirmation)",
           "Management-level employees only",
@@ -247,48 +262,14 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "type": "text"
       },
       {
-        "id": "PF_1_12_other",
-        "label": "Please specify %",
-        "type": "text"
-      },
-      {
         "id": "PF_1_12",
         "label": "What is the maximum loan limit (% of total PF balance)?",
-        "type": "checkbox",
-        "options": [
-          "80%",
-          "Other"
-        ]
+        "type": "text"
       },
       {
         "id": "PF_1_13",
         "label": "Minimum service requirement for loan eligibility",
         "type": "text"
-      },
-      {
-        "id": "PF_1_14",
-        "label": "Permitted loan purposes",
-        "type": "checkbox",
-        "options": [
-          "Housing",
-          "Medical",
-          "Education",
-          "Marriage/Funeral",
-          "LIC premium",
-          "Travel expenses"
-        ]
-      },
-      {
-        "id": "PF_1_15",
-        "label": "Repayment tenure",
-        "type": "checkbox",
-        "options": [
-          "12",
-          "24",
-          "36",
-          "48",
-          "60"
-        ]
       }
     ]
   },
@@ -351,26 +332,39 @@ export const SURVEY_MODULES: SurveyModule[] = [
       },
       {
         "id": "GF_2_5",
-        "label": "Gratuity — treatment on different modes of separation",
+        "label": "What happens in the case of dismissal on disciplinary grounds?",
         "type": "text"
       },
       {
-        "id": "GF_table_2_5",
-        "label": "Mode of Separation",
+        "id": "GF_2_6",
+        "label": "Entitlement",
+        "type": "text"
+      },
+      {
+        "id": "GF_2_6_eligibility_start",
+        "label": "Eligibility Start (Years)",
+        "type": "radio",
+        "options": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      },
+      {
+        "id": "GF_table_2_6",
+        "label": "SL",
         "type": "table",
         "columns": [
-          "Eligible? (Y/N)",
-          "Rate applied",
-          "Any condition / note"
+          "From (Years)",
+          "To (Years)"
         ],
         "rows": [
-          "Resignation (voluntary)",
-          "Termination (company-initiated, without cause)",
-          "Termination for misconduct",
-          "Retirement (normal)",
-          "Retirement (early)",
-          "Death / permanent disability",
-          "Redundancy / retrenchment"
+          "1",
+          "2",
+          "3",
+          "4"
         ]
       }
     ]
@@ -447,20 +441,6 @@ export const SURVEY_MODULES: SurveyModule[] = [
         ]
       },
       {
-        "id": "LE_3_6_days",
-        "label": "Days",
-        "type": "text"
-      },
-      {
-        "id": "LE_3_6",
-        "label": "Do you have any cap on encashment?",
-        "type": "radio",
-        "options": [
-          "Yes",
-          "Not applicable"
-        ]
-      },
-      {
         "id": "LE_3_7_custom",
         "label": "Please provide",
         "type": "text"
@@ -501,26 +481,12 @@ export const SURVEY_MODULES: SurveyModule[] = [
     "description": "This module benchmarks retirement age norms across organizations and industries, including post-retirement extension practices and talent retention implications.",
     "questions": [
       {
-        "id": "RA_4_1",
-        "label": "Industry / Sector — select the primary sector that best describes your organization",
-        "type": "radio",
-        "options": [
-          "Telecom",
-          "FMCG / Consumer Goods",
-          "Tobacco",
-          "Energy / Oil & Gas",
-          "Manufacturing / Coatings",
-          "Other — please specify"
-        ],
-        "hasInput": true
-      },
-      {
-        "id": "RA_4_2_years",
+        "id": "RA_4_1_years",
         "label": "Years",
         "type": "text"
       },
       {
-        "id": "RA_4_2",
+        "id": "RA_4_1",
         "label": "What is the standard retirement age in your organization for management employees?",
         "type": "radio",
         "options": [
@@ -531,7 +497,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "hasInput": true
       },
       {
-        "id": "RA_4_3",
+        "id": "RA_4_2",
         "label": "Is the retirement age uniform across all management grades, or does it vary?",
         "type": "radio",
         "options": [
@@ -541,7 +507,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         ]
       },
       {
-        "id": "RA_table_4_3",
+        "id": "RA_table_4_2",
         "label": "Grade / Level",
         "type": "table",
         "columns": [
@@ -557,7 +523,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         ]
       },
       {
-        "id": "RA_4_4",
+        "id": "RA_4_3",
         "label": "Does your organization permit post-retirement service extension?",
         "type": "radio",
         "options": [
@@ -572,7 +538,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "type": "text"
       },
       {
-        "id": "RA_table_4_5",
+        "id": "RA_table_4_4",
         "label": "Parameter",
         "type": "table",
         "columns": [
@@ -587,7 +553,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         ]
       },
       {
-        "id": "RA_4_5",
+        "id": "RA_4_4",
         "label": "What is the primary driver of your retirement age policy?",
         "type": "radio",
         "options": [
@@ -595,24 +561,9 @@ export const SURVEY_MODULES: SurveyModule[] = [
           "Parent company / global policy",
           "Industry / market norm",
           "Internal talent strategy",
-          "Collective bargaining / union agreement",
           "Other — please specify"
         ],
         "hasInput": true
-      },
-      {
-        "id": "RA_4_6_years",
-        "label": "Years",
-        "type": "text"
-      },
-      {
-        "id": "RA_4_6",
-        "label": "Has your organization reviewed or revised the retirement age?",
-        "type": "radio",
-        "options": [
-          "Yes — please specify in years",
-          "No — not reviewed"
-        ]
       }
     ]
   },
@@ -630,7 +581,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "label": "Grade / Level",
         "type": "table",
         "columns": [
-          "Notice period (days/months)"
+          "Notice period (months)"
         ],
         "rows": [
           "L1 — Top Management (CXO / MD)",
@@ -650,7 +601,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "label": "Grade / Level",
         "type": "table",
         "columns": [
-          "Notice period (days/months)",
+          "Notice period (months)",
           "Notes (If any)"
         ],
         "rows": [
@@ -716,7 +667,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
       },
       {
         "id": "ET_5_7",
-        "label": "What is the notice period treatment for termination for cause (gross misconduct)?",
+        "label": "What is the notice period treatment for termination for cause (gross misconduct)? (e.g. no notice / immediate termination, reduced notice of 15 days, subject to inquiry outcome)",
         "type": "radio",
         "options": [
           "No notice / PILON — immediate termination",
@@ -794,7 +745,6 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "type": "radio",
         "options": [
           "Management employees only (policy in scope)",
-          "All permanent employees (all grades)",
           "Selected roles / functions only — please specify below"
         ]
       },
@@ -860,5 +810,4 @@ export const INSTRUCTIONS = [
   'Where a policy differs by management grade, please use the grade tables provided. Leave rows blank if a grade is not applicable.',
   'Select the most accurate option. Use Other — please specify where your policy does not match any listed option.',
   'Where a question refers to the Bangladesh Labor Law (2026 Amendment), indicate whether your policy meets, exceeds, or falls short of the requirement.',
-  'Return the completed questionnaire to ZUNOKS at zunoks.consulting@zunoks.com or contact +880 9678 224224 for support.',
 ];

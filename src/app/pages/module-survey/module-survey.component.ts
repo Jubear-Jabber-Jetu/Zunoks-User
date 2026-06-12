@@ -91,13 +91,13 @@ export class ModuleSurveyComponent implements OnInit {
       if (questionId === 'PF_1_9_sub_times') return withdrawAnswer === 'Yes' && reentryAnswer === 'Yes';
 
       const loanAnswer = this.state.getAnswer('Provident Fund', 'PF_1_10');
-      const loanFollowUpIds = ['PF_1_11', 'PF_1_12', 'PF_1_13', 'PF_1_14', 'PF_1_15'];
+      const loanFollowUpIds = ['PF_1_11', 'PF_1_12', 'PF_1_13'];
       if (loanFollowUpIds.includes(questionId)) return loanAnswer === 'Yes';
     }
 
     if (this.currentModule.name === 'Retirement Age') {
-      const extensionAnswer = this.state.getAnswer('Retirement Age', 'RA_4_4');
-      if (questionId === 'RA_table_4_5') {
+      const extensionAnswer = this.state.getAnswer('Retirement Age', 'RA_4_3');
+      if (questionId === 'RA_table_4_4') {
         return this.postRetirementExtensionYes.includes(extensionAnswer);
       }
     }
@@ -116,8 +116,7 @@ export class ModuleSurveyComponent implements OnInit {
 
   /** Section headers merged into the following table question. */
   private readonly tableSectionHeaders: Record<string, string> = {
-    GF_table_2_5: 'GF_2_5',
-    RA_table_4_5: 'RA_4_sub_extension_terms',
+    RA_table_4_4: 'RA_4_sub_extension_terms',
     ET_table_5_1: 'ET_5_1',
     ET_table_5_2: 'ET_5_2',
     MP_table_6_2: 'MP_6_2',
@@ -138,8 +137,8 @@ export class ModuleSurveyComponent implements OnInit {
       showWhen: 'Grade wise contributions',
       caption: 'If yes, please complete the table below:',
     },
-    RA_4_3: {
-      tableId: 'RA_table_4_3',
+    RA_4_2: {
+      tableId: 'RA_table_4_2',
       showWhen: [
         'Varies by grade — senior grades have higher retirement age',
         'Varies by employment contract type',
@@ -157,28 +156,17 @@ export class ModuleSurveyComponent implements OnInit {
         showWhen: 'Employees after a minimum service period — specify below',
       },
     ],
-    PF_1_12: [
-      {
-        fieldId: 'PF_1_12_other',
-        label: 'Please specify %',
-        showWhen: 'Other',
-        placeholder: '0.00',
-        inputVariant: 'rate',
-      },
-    ],
     PF_1_4: [
       {
         fieldId: 'PF_1_4_employer_contribution',
         label: 'Employer contribution %',
         showWhen: 'Partial match — please specify % below',
-        placeholder: '0.00',
         inputVariant: 'rate',
       },
       {
         fieldId: 'PF_1_4_employee_contribution',
         label: 'Employee contribution %',
         showWhen: 'Partial match — please specify % below',
-        placeholder: '0.00',
         inputVariant: 'rate',
       },
       {
@@ -199,12 +187,13 @@ export class ModuleSurveyComponent implements OnInit {
         fieldId: 'LE_3_3_days',
         label: 'Number of days',
         showWhen: 'Number of days',
+        inputVariant: 'integer',
       },
       {
         fieldId: 'LE_3_3_percentage',
         label: 'Percentage',
         showWhen: 'Percentage',
-        placeholder: 'e.g. 50% of total annual leave balance',
+        inputVariant: 'integer',
       },
     ],
     LE_3_5: [
@@ -212,13 +201,7 @@ export class ModuleSurveyComponent implements OnInit {
         fieldId: 'LE_3_5_days',
         label: 'In days',
         showWhen: 'In days',
-      },
-    ],
-    LE_3_6: [
-      {
-        fieldId: 'LE_3_6_days',
-        label: 'Days',
-        showWhen: 'Yes',
+        inputVariant: 'integer',
       },
     ],
     LE_3_7: [
@@ -226,7 +209,6 @@ export class ModuleSurveyComponent implements OnInit {
         fieldId: 'LE_3_7_custom',
         label: 'Please provide',
         showWhen: 'Please provide',
-        placeholder: 'e.g. Basic or Gross salary ÷ 30 days or 22 days × encashable days',
       },
     ],
     LE_3_8: [
@@ -234,20 +216,15 @@ export class ModuleSurveyComponent implements OnInit {
         fieldId: 'LE_3_8_maximum_carry_forward_days',
         label: 'Maximum carry-forward days',
         showWhen: 'Carry-forward permitted — capped at specific days (specify below)',
+        inputVariant: 'integer',
       },
     ],
-    RA_4_2: [
+    RA_4_1: [
       {
-        fieldId: 'RA_4_2_years',
+        fieldId: 'RA_4_1_years',
         label: 'Years',
         showWhen: 'Specify retirement age in years',
-      },
-    ],
-    RA_4_6: [
-      {
-        fieldId: 'RA_4_6_years',
-        label: 'Years',
-        showWhen: 'Yes — please specify in years',
+        inputVariant: 'integer',
       },
     ],
     ET_5_7: [
@@ -267,22 +244,23 @@ export class ModuleSurveyComponent implements OnInit {
   };
 
   private readonly groupedFieldIds = new Set([
-    'OP_3_name', 'OP_3_designation', 'OP_3_email', 'OP_3_date',
+    'OP_4_name', 'OP_4_designation', 'OP_4_email', 'OP_4_date',
   ]);
 
-  readonly op3Fields: FormFieldSpec[][] = [
+  readonly op4Fields: FormFieldSpec[][] = [
     [
-      { id: 'OP_3_name', label: 'Full name' },
-      { id: 'OP_3_designation', label: 'Designation' },
+      { id: 'OP_4_name', label: 'Full name' },
+      { id: 'OP_4_designation', label: 'Designation' },
     ],
     [
-      { id: 'OP_3_email', label: 'Email address', type: 'email' },
-      { id: 'OP_3_date', label: 'Date of completion', type: 'date' },
+      { id: 'OP_4_email', label: 'Email address', type: 'email' },
+      { id: 'OP_4_date', label: 'Date of completion', type: 'date' },
     ],
   ];
 
   skipQuestion(questionId: string): boolean {
     if (this.groupedFieldIds.has(questionId)) return true;
+    if (questionId === 'GF_2_6' || questionId === 'GF_table_2_6') return true;
     if (Object.values(this.tableSectionHeaders).includes(questionId)) return true;
     if (questionId.includes('_if_yes_please_complete_the_table_below')) return true;
     if (Object.values(this.conditionalRadioTables).some(c => c.tableId === questionId)) return true;
@@ -325,8 +303,8 @@ export class ModuleSurveyComponent implements OnInit {
     return values;
   }
 
-  getOp3Values(): Record<string, string> {
-    return this.getFieldGroupValues(['OP_3_name', 'OP_3_designation', 'OP_3_email', 'OP_3_date']);
+  getOp4Values(): Record<string, string> {
+    return this.getFieldGroupValues(['OP_4_name', 'OP_4_designation', 'OP_4_email', 'OP_4_date']);
   }
 
   onGroupFieldChange(event: { id: string; label: string; value: string }): void {
@@ -358,10 +336,10 @@ export class ModuleSurveyComponent implements OnInit {
 
     if (this.currentModule.name === 'Retirement Age') {
       if (
-        questionId === 'RA_4_4' &&
+        questionId === 'RA_4_3' &&
         !this.postRetirementExtensionYes.includes(value)
       ) {
-        this.state.clearAnswers(this.currentModule.name, ['RA_table_4_5']);
+        this.state.clearAnswers(this.currentModule.name, ['RA_table_4_4']);
       }
     }
 
