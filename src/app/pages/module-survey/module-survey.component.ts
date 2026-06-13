@@ -207,6 +207,12 @@ export class ModuleSurveyComponent implements OnInit {
     ],
     LE_3_7: [
       {
+        fieldId: 'LE_3_7_ctc_formula',
+        hint: 'Formula: Basic salary ÷ (working days) × encashable days',
+        showWhen: 'CTC Based',
+        displayOnly: true,
+      },
+      {
         fieldId: 'LE_3_7_basic_working_days',
         label: 'How many days do you count as working days?',
         hint: 'Formula: Basic salary ÷ (working days) × encashable days',
@@ -244,17 +250,10 @@ export class ModuleSurveyComponent implements OnInit {
         showWhen: 'Reduced notice (specify below)',
       },
     ],
-    MP_6_5: [
-      {
-        fieldId: 'MP_6_5_eligible_roles',
-        label: 'Eligible roles / functions',
-        showWhen: 'Selected roles / functions only — please specify below',
-      },
-    ],
   };
 
   private readonly groupedFieldIds = new Set([
-    'OP_4_name', 'OP_4_designation', 'OP_4_email', 'OP_4_date',
+    'OP_4_name', 'OP_4_designation', 'OP_4_email',
   ]);
 
   readonly op4Fields: FormFieldSpec[][] = [
@@ -264,7 +263,6 @@ export class ModuleSurveyComponent implements OnInit {
     ],
     [
       { id: 'OP_4_email', label: 'Email address', type: 'email' },
-      { id: 'OP_4_date', label: 'Date of completion', type: 'date' },
     ],
   ];
 
@@ -314,7 +312,7 @@ export class ModuleSurveyComponent implements OnInit {
   }
 
   getOp4Values(): Record<string, string> {
-    return this.getFieldGroupValues(['OP_4_name', 'OP_4_designation', 'OP_4_email', 'OP_4_date']);
+    return this.getFieldGroupValues(['OP_4_name', 'OP_4_designation', 'OP_4_email']);
   }
 
   onGroupFieldChange(event: { id: string; label: string; value: string }): void {

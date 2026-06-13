@@ -211,7 +211,7 @@
       <thead>
         <tr>
           <th>SL</th>
-          <th>Number of basic</th>
+          <th>NUMBER(S) OF BASIC</th>
           <th>From (Years)</th>
           <th>To (Years)</th>
         </tr>
@@ -270,8 +270,30 @@
             <td>{{ row }}</td>
             @for (col of question.columns; track col) {
               <td>
-                <input type="text" [placeholder]="tableInputPlaceholder()" [value]="getTableCell(row, col)"
-                  (input)="onTableInput(row, col, $any($event.target).value)" />
+                @if (tableColumnInputVariant(col) === 'rate') {
+                  <input
+                    type="text"
+                    inputmode="decimal"
+                    [placeholder]="tableInputPlaceholder()"
+                    [value]="getTableCell(row, col)"
+                    (input)="handleTableValidatedInput($event, row, col)"
+                    (paste)="handleTableValidatedPaste($event, row, col)"
+                    (keydown)="blockInvalidTableKey($event, col)"
+                  />
+                } @else if (tableColumnInputVariant(col) === 'integer') {
+                  <input
+                    type="text"
+                    inputmode="numeric"
+                    [placeholder]="tableInputPlaceholder()"
+                    [value]="getTableCell(row, col)"
+                    (input)="handleTableValidatedInput($event, row, col)"
+                    (paste)="handleTableValidatedPaste($event, row, col)"
+                    (keydown)="blockInvalidTableKey($event, col)"
+                  />
+                } @else {
+                  <input type="text" [placeholder]="tableInputPlaceholder()" [value]="getTableCell(row, col)"
+                    (input)="onTableInput(row, col, $any($event.target).value)" />
+                }
               </td>
             }
           </tr>
@@ -308,49 +330,53 @@
             }
             @for (field of getFieldsForOption(opt); track field.fieldId) {
               @if (value === opt) {
-                <div class="conditional-field" [class.rate-field]="field.inputVariant === 'rate' || field.inputVariant === 'integer'">
-                  @if (field.hint || inputHint(field.fieldId, field.inputVariant)) {
+                <div class="conditional-field" [class.rate-field]="!field.displayOnly && (field.inputVariant === 'rate' || field.inputVariant === 'integer')">
+                  @if (field.hint || (!field.displayOnly && inputHint(field.fieldId, field.inputVariant))) {
                     <p class="field-hint">{{ field.hint || inputHint(field.fieldId, field.inputVariant) }}</p>
                   }
-                  <label [for]="field.fieldId">{{ field.label }}</label>
-                  @if (field.inputVariant === 'rate') {
-                    <div class="rate-input-wrap">
+                  @if (!field.displayOnly) {
+                    @if (field.label) {
+                      <label [for]="field.fieldId">{{ field.label }}</label>
+                    }
+                    @if (field.inputVariant === 'rate') {
+                      <div class="rate-input-wrap">
+                        <input
+                          [id]="field.fieldId"
+                          type="text"
+                          inputmode="decimal"
+                          class="text-input"
+                          [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
+                          [value]="getConditionalFieldValue(field.fieldId)"
+                          (input)="handleConditionalValidatedInput($event, field)"
+                          (paste)="handleConditionalValidatedPaste($event, field)"
+                          (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
+                        />
+                        <span class="rate-suffix">%</span>
+                      </div>
+                    } @else if (field.inputVariant === 'integer') {
+                      <div class="rate-input-wrap">
+                        <input
+                          [id]="field.fieldId"
+                          type="text"
+                          inputmode="numeric"
+                          class="text-input"
+                          [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
+                          [value]="getConditionalFieldValue(field.fieldId)"
+                          (input)="handleConditionalValidatedInput($event, field)"
+                          (paste)="handleConditionalValidatedPaste($event, field)"
+                          (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
+                        />
+                      </div>
+                    } @else {
                       <input
                         [id]="field.fieldId"
                         type="text"
-                        inputmode="decimal"
                         class="text-input"
                         [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
-                        [value]="getConditionalFieldValue(field.fieldId)"
-                        (input)="handleConditionalValidatedInput($event, field)"
-                        (paste)="handleConditionalValidatedPaste($event, field)"
-                        (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
+                        [ngModel]="getConditionalFieldValue(field.fieldId)"
+                        (ngModelChange)="onConditionalFieldInput(field, $event)"
                       />
-                      <span class="rate-suffix">%</span>
-                    </div>
-                  } @else if (field.inputVariant === 'integer') {
-                    <div class="rate-input-wrap">
-                      <input
-                        [id]="field.fieldId"
-                        type="text"
-                        inputmode="numeric"
-                        class="text-input"
-                        [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
-                        [value]="getConditionalFieldValue(field.fieldId)"
-                        (input)="handleConditionalValidatedInput($event, field)"
-                        (paste)="handleConditionalValidatedPaste($event, field)"
-                        (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
-                      />
-                    </div>
-                  } @else {
-                    <input
-                      [id]="field.fieldId"
-                      type="text"
-                      class="text-input"
-                      [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
-                      [ngModel]="getConditionalFieldValue(field.fieldId)"
-                      (ngModelChange)="onConditionalFieldInput(field, $event)"
-                    />
+                    }
                   }
                 </div>
               }
@@ -376,8 +402,30 @@
                 <td>{{ row }}</td>
                 @for (col of conditionalTable.columns; track col) {
                   <td>
-                    <input type="text" [placeholder]="tableInputPlaceholder()" [value]="getTableCell(row, col)"
-                      (input)="onTableInput(row, col, $any($event.target).value)" />
+                    @if (tableColumnInputVariant(col) === 'rate') {
+                      <input
+                        type="text"
+                        inputmode="decimal"
+                        [placeholder]="tableInputPlaceholder()"
+                        [value]="getTableCell(row, col)"
+                        (input)="handleTableValidatedInput($event, row, col)"
+                        (paste)="handleTableValidatedPaste($event, row, col)"
+                        (keydown)="blockInvalidTableKey($event, col)"
+                      />
+                    } @else if (tableColumnInputVariant(col) === 'integer') {
+                      <input
+                        type="text"
+                        inputmode="numeric"
+                        [placeholder]="tableInputPlaceholder()"
+                        [value]="getTableCell(row, col)"
+                        (input)="handleTableValidatedInput($event, row, col)"
+                        (paste)="handleTableValidatedPaste($event, row, col)"
+                        (keydown)="blockInvalidTableKey($event, col)"
+                      />
+                    } @else {
+                      <input type="text" [placeholder]="tableInputPlaceholder()" [value]="getTableCell(row, col)"
+                        (input)="onTableInput(row, col, $any($event.target).value)" />
+                    }
                   </td>
                 }
               </tr>
@@ -406,49 +454,53 @@
             </button>
             @for (field of getFieldsForOption(opt); track field.fieldId) {
               @if (checkboxValues.includes(opt)) {
-                <div class="conditional-field" [class.rate-field]="field.inputVariant === 'rate' || field.inputVariant === 'integer'">
-                  @if (field.hint || inputHint(field.fieldId, field.inputVariant)) {
+                <div class="conditional-field" [class.rate-field]="!field.displayOnly && (field.inputVariant === 'rate' || field.inputVariant === 'integer')">
+                  @if (field.hint || (!field.displayOnly && inputHint(field.fieldId, field.inputVariant))) {
                     <p class="field-hint">{{ field.hint || inputHint(field.fieldId, field.inputVariant) }}</p>
                   }
-                  <label [for]="field.fieldId">{{ field.label }}</label>
-                  @if (field.inputVariant === 'rate') {
-                    <div class="rate-input-wrap">
+                  @if (!field.displayOnly) {
+                    @if (field.label) {
+                      <label [for]="field.fieldId">{{ field.label }}</label>
+                    }
+                    @if (field.inputVariant === 'rate') {
+                      <div class="rate-input-wrap">
+                        <input
+                          [id]="field.fieldId"
+                          type="text"
+                          inputmode="decimal"
+                          class="text-input"
+                          [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
+                          [value]="getConditionalFieldValue(field.fieldId)"
+                          (input)="handleConditionalValidatedInput($event, field)"
+                          (paste)="handleConditionalValidatedPaste($event, field)"
+                          (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
+                        />
+                        <span class="rate-suffix">%</span>
+                      </div>
+                    } @else if (field.inputVariant === 'integer') {
+                      <div class="rate-input-wrap">
+                        <input
+                          [id]="field.fieldId"
+                          type="text"
+                          inputmode="numeric"
+                          class="text-input"
+                          [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
+                          [value]="getConditionalFieldValue(field.fieldId)"
+                          (input)="handleConditionalValidatedInput($event, field)"
+                          (paste)="handleConditionalValidatedPaste($event, field)"
+                          (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
+                        />
+                      </div>
+                    } @else {
                       <input
                         [id]="field.fieldId"
                         type="text"
-                        inputmode="decimal"
                         class="text-input"
                         [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
-                        [value]="getConditionalFieldValue(field.fieldId)"
-                        (input)="handleConditionalValidatedInput($event, field)"
-                        (paste)="handleConditionalValidatedPaste($event, field)"
-                        (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
+                        [ngModel]="getConditionalFieldValue(field.fieldId)"
+                        (ngModelChange)="onConditionalFieldInput(field, $event)"
                       />
-                      <span class="rate-suffix">%</span>
-                    </div>
-                  } @else if (field.inputVariant === 'integer') {
-                    <div class="rate-input-wrap">
-                      <input
-                        [id]="field.fieldId"
-                        type="text"
-                        inputmode="numeric"
-                        class="text-input"
-                        [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
-                        [value]="getConditionalFieldValue(field.fieldId)"
-                        (input)="handleConditionalValidatedInput($event, field)"
-                        (paste)="handleConditionalValidatedPaste($event, field)"
-                        (keydown)="blockInvalidSurveyKey($event, field.fieldId, field.inputVariant)"
-                      />
-                    </div>
-                  } @else {
-                    <input
-                      [id]="field.fieldId"
-                      type="text"
-                      class="text-input"
-                      [placeholder]="placeholderFor(field.fieldId, field.inputVariant, field.placeholder)"
-                      [ngModel]="getConditionalFieldValue(field.fieldId)"
-                      (ngModelChange)="onConditionalFieldInput(field, $event)"
-                    />
+                    }
                   }
                 </div>
               }
@@ -474,8 +526,30 @@
               <td>{{ row }}</td>
               @for (col of question.columns; track col) {
                 <td>
-                  <input type="text" [placeholder]="tableInputPlaceholder()" [value]="getTableCell(row, col)"
-                    (input)="onTableInput(row, col, $any($event.target).value)" />
+                  @if (tableColumnInputVariant(col) === 'rate') {
+                    <input
+                      type="text"
+                      inputmode="decimal"
+                      [placeholder]="tableInputPlaceholder()"
+                      [value]="getTableCell(row, col)"
+                      (input)="handleTableValidatedInput($event, row, col)"
+                      (paste)="handleTableValidatedPaste($event, row, col)"
+                      (keydown)="blockInvalidTableKey($event, col)"
+                    />
+                  } @else if (tableColumnInputVariant(col) === 'integer') {
+                    <input
+                      type="text"
+                      inputmode="numeric"
+                      [placeholder]="tableInputPlaceholder()"
+                      [value]="getTableCell(row, col)"
+                      (input)="handleTableValidatedInput($event, row, col)"
+                      (paste)="handleTableValidatedPaste($event, row, col)"
+                      (keydown)="blockInvalidTableKey($event, col)"
+                    />
+                  } @else {
+                    <input type="text" [placeholder]="tableInputPlaceholder()" [value]="getTableCell(row, col)"
+                      (input)="onTableInput(row, col, $any($event.target).value)" />
+                  }
                 </td>
               }
             </tr>

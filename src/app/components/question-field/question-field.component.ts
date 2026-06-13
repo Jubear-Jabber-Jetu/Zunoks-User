@@ -7,16 +7,18 @@ import {
   integerHint,
   percentRateHint,
   resolveSurveyInputKind,
+  resolveTableColumnInputKind,
   sanitizeSurveyInput,
 } from '../../utils/survey-input.utils';
 
 export interface ConditionalFieldSpec {
   fieldId: string;
-  label: string;
+  label?: string;
   showWhen: string;
   placeholder?: string;
   inputVariant?: 'rate' | 'integer';
   hint?: string;
+  displayOnly?: boolean;
 }
 
 @Component({
@@ -199,6 +201,40 @@ export class QuestionFieldComponent implements OnInit, OnChanges {
     }
   }
 
+  tableColumnInputVariant(column: string): 'rate' | 'integer' | undefined {
+    const kind = resolveTableColumnInputKind(column);
+    if (kind === 'percentRate') return 'rate';
+    if (kind === 'integer') return 'integer';
+    return undefined;
+  }
+
+  handleTableValidatedInput(event: Event, row: string, col: string): void {
+    const input = event.target as HTMLInputElement;
+    const variant = this.tableColumnInputVariant(col);
+    const sanitized = sanitizeSurveyInput(input.value, `table_${col}`, variant);
+    if (input.value !== sanitized) {
+      input.value = sanitized;
+    }
+    this.onTableInput(row, col, sanitized);
+  }
+
+  handleTableValidatedPaste(event: ClipboardEvent, row: string, col: string): void {
+    event.preventDefault();
+    const input = event.target as HTMLInputElement;
+    const pasted = event.clipboardData?.getData('text') ?? '';
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+    const merged = `${input.value.slice(0, start)}${pasted}${input.value.slice(end)}`;
+    const variant = this.tableColumnInputVariant(col);
+    const sanitized = sanitizeSurveyInput(merged, `table_${col}`, variant);
+    input.value = sanitized;
+    this.onTableInput(row, col, sanitized);
+  }
+
+  blockInvalidTableKey(event: KeyboardEvent, col: string): void {
+    this.blockInvalidSurveyKey(event, `table_${col}`, this.tableColumnInputVariant(col));
+  }
+
   getTableCell(row: string, col: string): string {
     return this.tableData[row]?.[col] ?? '';
   }
@@ -287,7 +323,7 @@ export class QuestionFieldComponent implements OnInit, OnChanges {
     if (input.value !== sanitized) {
       input.value = sanitized;
     }
-    this.conditionalFieldChange.emit({ id: field.fieldId, label: field.label, value: sanitized });
+    this.conditionalFieldChange.emit({ id: field.fieldId, label: field.label ?? '', value: sanitized });
   }
 
   handleConditionalValidatedPaste(event: ClipboardEvent, field: ConditionalFieldSpec): void {
@@ -299,11 +335,11 @@ export class QuestionFieldComponent implements OnInit, OnChanges {
     const merged = `${input.value.slice(0, start)}${pasted}${input.value.slice(end)}`;
     const sanitized = sanitizeSurveyInput(merged, field.fieldId, field.inputVariant);
     input.value = sanitized;
-    this.conditionalFieldChange.emit({ id: field.fieldId, label: field.label, value: sanitized });
+    this.conditionalFieldChange.emit({ id: field.fieldId, label: field.label ?? '', value: sanitized });
   }
 
   onConditionalFieldInput(field: ConditionalFieldSpec, value: string): void {
-    this.conditionalFieldChange.emit({ id: field.fieldId, label: field.label, value });
+    this.conditionalFieldChange.emit({ id: field.fieldId, label: field.label ?? '', value });
   }
 
   blockInvalidSurveyKey(event: KeyboardEvent, fieldId: string, inputVariant?: 'rate' | 'integer'): void {

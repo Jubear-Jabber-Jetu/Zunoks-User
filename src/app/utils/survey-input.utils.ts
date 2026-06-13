@@ -22,6 +22,16 @@ const INTEGER_FIELD_IDS = new Set([
 
 export type SurveyInputKind = 'text' | 'percentRate' | 'integer';
 
+const PERCENT_TABLE_COLUMNS = new Set([
+  'Employee contribution %',
+  'Employer contribution %',
+]);
+
+export function resolveTableColumnInputKind(column: string): SurveyInputKind {
+  if (PERCENT_TABLE_COLUMNS.has(column)) return 'percentRate';
+  return 'text';
+}
+
 export function resolveSurveyInputKind(
   fieldId: string,
   inputVariant?: 'rate' | 'integer'

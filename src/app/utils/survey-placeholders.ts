@@ -9,7 +9,6 @@ const TEXT_MODULE_PLACEHOLDERS: Record<string, string> = {
   PF_1_2_minimum_service: 'Describe the minimum period',
   PF_1_4_details: 'Add policy details',
   GF_2_4_scale_details: 'Describe the scale',
-  MP_6_5_eligible_roles: 'List eligible roles',
   ET_5_7_reduced_notice: 'Describe the notice period',
   GENERIC_TEXT: 'Type your answer',
 };

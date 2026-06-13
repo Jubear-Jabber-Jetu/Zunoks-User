@@ -16,6 +16,14 @@ export interface SurveyModule {
   questions: SurveyQuestion[];
 }
 
+export const STANDARD_GRADE_TABLE_ROWS = [
+  'L1 — Top Management (CXO / MD)',
+  'L2 — Senior Management (Director / VP)',
+  'L3 — Middle Management (Manager)',
+  'L4 — Junior Management (Assistant Manager/Sr. Officer)',
+  'L5 — Entry Management (MT/Officer/Executive)',
+];
+
 export function formatQuestionDisplayId(moduleName: string, questionId: string): string {
   if (moduleName === 'Provident Fund' && questionId.startsWith('PF_')) {
     const match = questionId.match(/^PF_(\d+)_(\d+)/);
@@ -95,11 +103,6 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "id": "OP_4_email",
         "label": "Email address",
         "type": "text"
-      },
-      {
-        "id": "OP_4_date",
-        "label": "Date of completion",
-        "type": "text"
       }
     ]
   },
@@ -125,7 +128,6 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "options": [
           "All permanent employees (management & non-management upon confirmation)",
           "Management-level employees only",
-          "Employees after completion of probation period",
           "Employees after a minimum service period — specify below"
         ]
       },
@@ -184,13 +186,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
           "Employer contribution %",
           "Contribution base"
         ],
-        "rows": [
-          "L1 — Top Management",
-          "L2 — Senior Management",
-          "L3 — Middle Management",
-          "L4 — Junior Management",
-          "L5 — Entry Management"
-        ]
+        "rows": STANDARD_GRADE_TABLE_ROWS
       },
       {
         "id": "PF_1_6",
@@ -292,7 +288,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "label": "Minimum service requirement for Gratuity eligibility",
         "type": "radio",
         "options": [
-          "More than 6 months (as per statute for some termination types)",
+          "More than 6 months",
           "1 year",
           "2 years",
           "3 years",
@@ -441,6 +437,11 @@ export const SURVEY_MODULES: SurveyModule[] = [
         ]
       },
       {
+        "id": "LE_3_7_ctc_formula",
+        "label": "CTC formula",
+        "type": "text"
+      },
+      {
         "id": "LE_3_7_basic_working_days",
         "label": "Working days (Basic Based)",
         "type": "text"
@@ -452,7 +453,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
       },
       {
         "id": "LE_3_7",
-        "label": "Encashment calculation basis — what rate is used?",
+        "label": "Encashment calculation basis",
         "type": "radio",
         "options": [
           "CTC Based",
@@ -516,13 +517,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
           "Retirement age",
           "Any note / exception"
         ],
-        "rows": [
-          "L1 — Top Management (CXO / MD)",
-          "L2 — Senior Management (Director / VP)",
-          "L3 — Middle Management (Manager)",
-          "L4 — Junior Management (Officer)",
-          "L5 — Entry Management"
-        ]
+        "rows": STANDARD_GRADE_TABLE_ROWS
       },
       {
         "id": "RA_4_3",
@@ -585,13 +580,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "columns": [
           "Notice period (months)"
         ],
-        "rows": [
-          "L1 — Top Management (CXO / MD)",
-          "L2 — Senior Management (Director / VP)",
-          "L3 — Middle Management (Manager / AM)",
-          "L4 — Junior Management (Officer / Sr Officer)",
-          "L5 — Entry Management (Executive / MT)"
-        ]
+        "rows": STANDARD_GRADE_TABLE_ROWS
       },
       {
         "id": "ET_5_2",
@@ -606,13 +595,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
           "Notice period (months)",
           "Notes (If any)"
         ],
-        "rows": [
-          "L1 — Top Management",
-          "L2 — Senior Management",
-          "L3 — Middle Management",
-          "L4 — Junior Management",
-          "L5 — Entry Management"
-        ]
+        "rows": STANDARD_GRADE_TABLE_ROWS
       },
       {
         "id": "ET_5_3",
@@ -709,13 +692,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
           "Approx. BDT value / budget",
           "Device category (e.g. flagship, mid-range)"
         ],
-        "rows": [
-          "L1 — Top Management (CXO / MD)",
-          "L2 — Senior Management (Director / VP)",
-          "L3 — Middle Management (Manager / AM)",
-          "L4 — Junior Management (Officer)",
-          "L5 — Entry Management (Executive / MT)"
-        ]
+        "rows": STANDARD_GRADE_TABLE_ROWS
       },
       {
         "id": "MP_6_3",
@@ -737,21 +714,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "hasInput": true
       },
       {
-        "id": "MP_6_5_eligible_roles",
-        "label": "Eligible roles / functions",
-        "type": "text"
-      },
-      {
         "id": "MP_6_5",
-        "label": "Is the mobile phone set policy applicable to management employees only, or broader?",
-        "type": "radio",
-        "options": [
-          "Management employees only (policy in scope)",
-          "Selected roles / functions only — please specify below"
-        ]
-      },
-      {
-        "id": "MP_6_6",
         "label": "Does your organization have a Bring Your Own Phone policy instead of or alongside the set policy?",
         "type": "radio",
         "options": [
@@ -762,7 +725,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         ]
       },
       {
-        "id": "MP_6_7",
+        "id": "MP_6_6",
         "label": "Additional notes on your mobile phone set policy. Use this space to clarify any unique provisions, exceptions, or planned changes (e.g. does the company provide mobile phone as a tool of trade? If yes, then for which role?).",
         "type": "textarea"
       }
