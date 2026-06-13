@@ -123,7 +123,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "label": "PF eligibility — which employees are covered?",
         "type": "radio",
         "options": [
-          "All permanent employees (upon confirmation)",
+          "All permanent employees (management & non-management upon confirmation)",
           "Management-level employees only",
           "Employees after completion of probation period",
           "Employees after a minimum service period — specify below"
@@ -804,11 +804,11 @@ export const SURVEY_META = {
   client: 'BAT Bangladesh',
   conductedBy: 'ZUNOKS Consulting',
   date: 'June 2026',
-  confidentiality: 'CONFIDENTIAL & RESTRICTED — This questionnaire is issued exclusively to authorized representatives of participating organizations.',
+  confidentiality: 'CONFIDENTIAL & RESTRICTED — This questionnaire is issued exclusively to authorized representatives of participating organizations. All data collected is subject to strict confidentiality protocols. Individual company responses will not be disclosed. Results will be published only in anonymized, aggregated form.',
 };
 
 export const INSTRUCTIONS = [
-  'Respond on behalf of management-level employees only (excludes factory/daily-rated workers unless explicitly stated).',
+  'Responses are for the management-level employees only (excludes factory/daily-rated workers unless explicitly stated). ',
   'Where a policy differs by management grade, please use the grade tables provided. Leave rows blank if a grade is not applicable.',
   'Select the most accurate option. Use Other — please specify where your policy does not match any listed option.',
   'Where a question refers to the Bangladesh Labor Law (2026 Amendment), indicate whether your policy meets, exceeds, or falls short of the requirement.',
