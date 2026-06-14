@@ -21,6 +21,24 @@ export class IntroComponent implements OnInit {
     this.acknowledged = this.state.introAcknowledged();
   }
 
+  instructionParts(text: string): Array<{ type: 'text' | 'email'; value: string }> {
+    const emailMatch = text.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
+    if (!emailMatch || emailMatch.index === undefined) {
+      return [{ type: 'text', value: text }];
+    }
+
+    const email = emailMatch[1];
+    const before = text.slice(0, emailMatch.index);
+    const after = text.slice(emailMatch.index + email.length);
+    const parts: Array<{ type: 'text' | 'email'; value: string }> = [];
+
+    if (before) parts.push({ type: 'text', value: before });
+    parts.push({ type: 'email', value: email });
+    if (after) parts.push({ type: 'text', value: after });
+
+    return parts;
+  }
+
   ngOnInit(): void {
     this.state.setLastRoute('/');
   }

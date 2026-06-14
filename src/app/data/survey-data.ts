@@ -775,4 +775,5 @@ export const INSTRUCTIONS = [
   'Where a policy differs by management grade, please use the grade tables provided. Leave rows blank if a grade is not applicable.',
   'Select the most accurate option. Use Other — please specify where your policy does not match any listed option.',
   'Where a question refers to the Bangladesh Labor Law (2026 Amendment), indicate whether your policy meets, exceeds, or falls short of the requirement.',
+  'In case of any difficulties, please email mashiat@zunoks.com.',
 ];

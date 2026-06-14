@@ -58,7 +58,15 @@
       @for (item of instructions; track item; let i = $index) {
         <li class="instruction-item" [style.--step-delay]="i * 0.05 + 's'">
           <span class="step-num">{{ i + 1 }}</span>
-          <span class="step-text">{{ item }}</span>
+          <span class="step-text">
+            @for (part of instructionParts(item); track $index) {
+              @if (part.type === 'email') {
+                <a class="instruction-email" [href]="'mailto:' + part.value">{{ part.value }}</a>
+              } @else {
+                {{ part.value }}
+              }
+            }
+          </span>
         </li>
       }
     </ol>

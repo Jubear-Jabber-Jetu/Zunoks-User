@@ -225,6 +225,23 @@
   padding-top: 0.2rem;
 }
 
+.instruction-email {
+  color: var(--brand-green-deep);
+  font-weight: 800;
+  text-decoration: none;
+  background: var(--brand-green-soft);
+  padding: 0.1rem 0.45rem;
+  border-radius: 6px;
+  border: 1px solid rgba(var(--brand-green-rgb), 0.25);
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+
+  &:hover {
+    color: #fff;
+    background: var(--brand-green);
+    border-color: var(--brand-green);
+  }
+}
+
 /* ── Footer CTA ── */
 
 .intro-footer {
