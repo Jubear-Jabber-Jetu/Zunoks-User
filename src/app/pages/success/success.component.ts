@@ -9,10 +9,15 @@ import { SurveyApiService } from '../../services/survey-api.service';
   styleUrl: './success.component.scss',
 })
 export class SuccessComponent {
+  downloaded = false;
+
   constructor(public state: SurveyStateService, private api: SurveyApiService) {}
 
   download(): void {
     const id = this.state.submissionId();
-    if (id) window.open(this.api.getDownloadUrl(id), '_blank');
+    if (id) {
+      window.open(this.api.getDownloadUrl(id), '_blank');
+      this.downloaded = true;
+    }
   }
 }

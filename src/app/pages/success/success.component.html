@@ -12,5 +12,7 @@
   <p>Your survey has been submitted successfully.</p>
   <p class="info">Please return the completed questionnaire to your designated ZUNOKS contact.</p>
 
-  <button class="btn btn-primary" (click)="download()">Download Excel Report</button>
+  @if (!downloaded) {
+    <button class="btn btn-primary" (click)="download()">Download Excel Report</button>
+  }
 </div>
