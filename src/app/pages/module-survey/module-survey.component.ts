@@ -96,13 +96,6 @@ export class ModuleSurveyComponent implements OnInit {
       if (loanFollowUpIds.includes(questionId)) return loanAnswer === 'Yes';
     }
 
-    if (this.currentModule.name === 'Retirement Age') {
-      const extensionAnswer = this.state.getAnswer('Retirement Age', 'RA_4_3');
-      if (questionId === 'RA_table_4_4') {
-        return this.postRetirementExtensionYes.includes(extensionAnswer);
-      }
-    }
-
     if (!this.isModuleSkipped) return true;
     const gate = this.moduleSkipGate;
     if (!gate) return true;
@@ -117,7 +110,6 @@ export class ModuleSurveyComponent implements OnInit {
 
   /** Section headers merged into the following table question. */
   private readonly tableSectionHeaders: Record<string, string> = {
-    RA_table_4_4: 'RA_4_sub_extension_terms',
     ET_table_5_1: 'ET_5_1',
     ET_table_5_2: 'ET_5_2',
     MP_table_6_2: 'MP_6_2',
@@ -150,13 +142,6 @@ export class ModuleSurveyComponent implements OnInit {
 
   /** Questions with conditional inline fields when a specific option is selected. */
   private readonly conditionalFields: Record<string, ConditionalFieldSpec[]> = {
-    PF_1_2: [
-      {
-        fieldId: 'PF_1_2_minimum_service',
-        label: 'Minimum service period required',
-        showWhen: 'Employees after a minimum service period — specify below',
-      },
-    ],
     PF_1_4: [
       {
         fieldId: 'PF_1_4_employer_contribution',
@@ -241,6 +226,18 @@ export class ModuleSurveyComponent implements OnInit {
         label: 'Years',
         showWhen: 'Specify retirement age in years',
         inputVariant: 'integer',
+      },
+    ],
+    RA_4_3: [
+      {
+        fieldId: 'RA_4_sub_extension_terms',
+        label: 'If post-retirement extension is permitted, what are the terms?',
+        showWhen: 'Yes — fixed extension period (e.g., up to 2 years)',
+      },
+      {
+        fieldId: 'RA_4_sub_extension_terms',
+        label: 'If post-retirement extension is permitted, what are the terms?',
+        showWhen: 'Yes — discretionary, subject to performance / business need',
       },
     ],
     ET_5_7: [
@@ -347,7 +344,7 @@ export class ModuleSurveyComponent implements OnInit {
         questionId === 'RA_4_3' &&
         !this.postRetirementExtensionYes.includes(value)
       ) {
-        this.state.clearAnswers(this.currentModule.name, ['RA_table_4_4']);
+        this.state.clearAnswers(this.currentModule.name, ['RA_4_sub_extension_terms']);
       }
     }
 

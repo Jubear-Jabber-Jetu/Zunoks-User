@@ -6,7 +6,6 @@ export const NUMERIC_INPUT_PLACEHOLDER = 'Input here';
 /** Soft text-only placeholders for module questions — never example numbers. */
 const TEXT_MODULE_PLACEHOLDERS: Record<string, string> = {
   OTHER_SPECIFY: 'Add details',
-  PF_1_2_minimum_service: 'Describe the minimum period',
   PF_1_4_details: 'Add policy details',
   GF_2_4_scale_details: 'Describe the scale',
   ET_5_7_reduced_notice: 'Describe the notice period',

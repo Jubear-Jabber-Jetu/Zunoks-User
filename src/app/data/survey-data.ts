@@ -126,15 +126,9 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "label": "PF eligibility — which employees are covered?",
         "type": "radio",
         "options": [
-          "All permanent employees (management & non-management upon confirmation)",
-          "Management-level employees only",
-          "Employees after a minimum service period — specify below"
+          "All permanent management upon confirmation",
+          "All permanent management after a minimum service period"
         ]
-      },
-      {
-        "id": "PF_1_2_minimum_service",
-        "label": "Minimum service period required",
-        "type": "text"
       },
       {
         "id": "PF_1_3",
@@ -535,21 +529,6 @@ export const SURVEY_MODULES: SurveyModule[] = [
         "type": "text"
       },
       {
-        "id": "RA_table_4_4",
-        "label": "Parameter",
-        "type": "table",
-        "columns": [
-          "Practice / Details"
-        ],
-        "rows": [
-          "Maximum extension period allowed",
-          "Terms of employment during extension",
-          "Benefits applicable during extension",
-          "Approval authority",
-          "Is performance reviewed prior to extension?"
-        ]
-      },
-      {
         "id": "RA_4_4",
         "label": "What is the primary driver of your retirement age policy?",
         "type": "radio",
@@ -570,7 +549,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
     "questions": [
       {
         "id": "ET_5_1",
-        "label": "Notice period — employer-initiated termination (without cause / redundancy). Specify notice period in days or months by management grade.",
+        "label": "Notice Period: Employer initiated termination. Specify notice period in days or months by management grade.",
         "type": "text"
       },
       {
@@ -584,7 +563,7 @@ export const SURVEY_MODULES: SurveyModule[] = [
       },
       {
         "id": "ET_5_2",
-        "label": "Notice period — employee-initiated resignation. Specify notice period in days or months by management grade.",
+        "label": "Notice Period: Employee initiated resignation. Specify notice period in days or months by management grade.",
         "type": "text"
       },
       {
@@ -715,17 +694,6 @@ export const SURVEY_MODULES: SurveyModule[] = [
       },
       {
         "id": "MP_6_5",
-        "label": "Does your organization have a Bring Your Own Phone policy instead of or alongside the set policy?",
-        "type": "radio",
-        "options": [
-          "No — company provides device only",
-          "Yes — Bring Your Own Phone with no allowance",
-          "Yes — Bring Your Own Phone with a monthly connectivity / Bring Your Own Phone with lump-sum allowance",
-          "Hybrid — some grades get device, others on BYOD"
-        ]
-      },
-      {
-        "id": "MP_6_6",
         "label": "Additional notes on your mobile phone set policy. Use this space to clarify any unique provisions, exceptions, or planned changes (e.g. does the company provide mobile phone as a tool of trade? If yes, then for which role?).",
         "type": "textarea"
       }
